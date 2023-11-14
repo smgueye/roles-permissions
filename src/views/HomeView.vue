@@ -1,18 +1,31 @@
 <template>
   <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js + TypeScript App"/>
+    <user-form :user="user" :key="user.id"/>
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import HelloWorld from '@/components/HelloWorld.vue'; // @ is an alias to /src
+import UserForm from '@/components/user-form.vue';
 
 export default defineComponent({
   name: 'HomeView',
   components: {
-    HelloWorld,
+    UserForm
+  },
+  data(vm) {
+    return {
+      user: {
+        id: ''
+      }
+    }
+  },
+  mounted() {
+    fetch("https://jsonplaceholder.typicode.com/users/1")
+      .then(response => response.json())
+      .then(user => {
+        this.user = user;
+      })
   },
 });
 </script>
